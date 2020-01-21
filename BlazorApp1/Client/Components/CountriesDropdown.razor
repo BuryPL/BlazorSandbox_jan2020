@@ -1,0 +1,28 @@
+﻿@using System.Net
+@using System.Net.Http
+@using BlazorApp1.Shared.Models
+
+@inject HttpClient Http
+<InputSelect @bind-Value="@Form.DropdownCountryName">
+    <option value="">Select country...</option>
+    @foreach (var country in forDrop)
+    {
+        <option value="@country.Alpha3Code">@country.Name</option>
+    }
+</InputSelect>
+
+@code {
+    [Parameter]
+    public TheForm Form { get; set; }
+
+    [Parameter]
+    public string Url { get; set; }
+
+    private string result;
+    private IList<CountriesForDropdown> forDrop = new List<CountriesForDropdown>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        forDrop = await Http.GetJsonAsync<IList<CountriesForDropdown>>(Url);
+    }
+}

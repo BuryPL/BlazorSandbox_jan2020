@@ -1,0 +1,35 @@
+﻿@using BlazorApp1.Shared.Models
+@using LogicAndShit.Validation
+@using Telerik.Blazor.Components
+
+@page "/formsyncfusion"
+@inject IValidations Validations
+
+<h1>Syncfusion form</h1>
+
+<EditForm Model="@exampleForm" OnValidSubmit="@HandleSubmit">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <EjsCalendar TValue="DateTime"></EjsCalendar>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit">Submit!</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private string _valClasses = "invisible";
+    private bool _isValidated = false;
+
+    private TheForm exampleForm = new TheForm();
+
+    private void HandleSubmit()
+    {
+        
+    }
+}

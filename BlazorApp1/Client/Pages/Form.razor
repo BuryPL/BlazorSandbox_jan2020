@@ -1,0 +1,77 @@
+﻿@using BlazorApp1.Shared.Models
+@using LogicAndShit.Validation
+@using System.Net.Http
+@using BlazorApp1.Client.Components
+
+@page "/form"
+
+@inject HttpClient Http
+@inject IValidations Validations
+
+<h1>Welcome to: THE FOOOOOOOORM!</h1>
+
+<EditForm Model="@exampleForm" OnValidSubmit="@HandleSubmit">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <InputText id="name" @bind-Value="exampleForm.SimpleInput" />
+                <label class="@_valClasses">@result.ValidationMessage</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="chkb">Behold, the checkbox: </label>
+                <InputCheckbox id="chkb" @bind-Value="@exampleForm.Checkbox" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <CountriesDropdown Form="@exampleForm"
+                                   Url="https://restcountries.eu/rest/v2/all?fields=name;alpha3Code"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @summary
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private string _valClasses = "invisible";
+    private bool _isValidated = false;
+
+    private TheForm exampleForm = new TheForm();
+    private ValidationResult result = new ValidationResult();
+    private IList<CountriesForDropdown> forDrop = new List<CountriesForDropdown>();
+    private string summary;
+
+    private void HandleSubmit()
+    {
+        result = Validations.ValidateTheForm(exampleForm);
+        if (result.IsValid)
+        {
+            _valClasses = "text-success";
+            summary = $"Summary: {exampleForm.SimpleInput}, {exampleForm.Checkbox.ToString()}, {exampleForm.DropdownCountryName}";
+        }
+        else
+        {
+            _valClasses = "text-danger";
+        }
+
+
+    }
+
+}
