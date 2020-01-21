@@ -24,6 +24,7 @@ namespace BlazorApp1.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+			Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTk5NTkxQDMxMzcyZTM0MmUzMGN0WERlYW9CdCtDRDgrYVQ3a2pETEhyc2F0TTRaQXUyeXhPMVlLWG9ZRzA9");
             app.UseResponseCompression();
 
             if (env.IsDevelopment())
